@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+<title>Program</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Program">
+<meta name="theme-color" content="#0A0A0B">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACsElEQVR4nO3dMXLaUBRA0ZBJRaosMyvKMlOlT+EUGY8vg2SZr4fPqT3A41++LAHD5Xr9/gXe8nX1A+C8xEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEH6tvoB/PP7Z/5q+o9ffx75SB7p5FNflv+W/Y0n6H9neLIONGLqxYeVO5+jTX95flOmXhnH1smfo49BUy+LY9/M0/uYNbWzFdKaON7zUpi7eYyb2s5BEgdp50WwN3e5J7sUMddRq7Nn56jj39z/Bp7JgauzOY7b96GPtY5dnW1x3HPr+ljl8NXZEMeUi76f00esjrMVkjhI4iCJgyQOkjhI4iCJgyQOkjhIZ/neyiYuzz+GnYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDtLIt+yHfp1/3CcN7BwkcZDEQRIHSRwkcZDEQRIHSRwkcZA2xHH/Reuhl7dH+4jV2bZz3HO7yljl8NXZfFi5fevKWOvY1dnzP0fdhzLO4MDV2fmWvQ7O7KjVcbZCEgdpTRzv2ffmHtHGTW3nIC2LY99LYe628WLW1Ct3jq0zTy/jxaCpFx9WPucl+SlTX67XU3xe/sbH9p8pi1dOPvVZ4uCEnK2QxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQ/gKT2IGI1ULxIQAAAABJRU5ErkJggg==">
+<style>
+  :root, [data-theme="dark"]{
+    --bg:#0A0A0B;
+    --surface:#161618;
+    --surface-2:#1E1E21;
+    --border:#2B2B2F;
+    --text:#F2F2F3;
+    --text-dim:#9B9BA1;
+    --accent:#F97316;
+    --accent-soft:#3A2211;
+    --accent-ink:#1A0D00;
+    --gold:#EAB308;
+    --gold-soft:#332B06;
+    --warn-bg:#332406;
+    --warn-border:#5C4310;
+    --warn-text:#F5D68A;
+    --radius:16px;
+    --radius-sm:10px;
+  }
+  [data-theme="light"]{
+    --bg:#F3F3F4;
+    --surface:#FFFFFF;
+    --surface-2:#F0F0F1;
+    --border:#E1E1E3;
+    --text:#18181B;
+    --text-dim:#6B6B70;
+    --accent:#EA580C;
+    --accent-soft:#FDE4CC;
+    --accent-ink:#7C2D00;
+    --gold:#B45309;
+    --gold-soft:#FDECC8;
+    --warn-bg:#FDECC8;
+    --warn-border:#F3C969;
+    --warn-text:#7C4A03;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    min-height:100vh;
+    padding-bottom:84px;
+    -webkit-tap-highlight-color:transparent;
+    transition:background .2s ease, color .2s ease;
+  }
+  .app{max-width:560px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) 16px 8px;padding-left:calc(16px + env(safe-area-inset-left));padding-right:calc(16px + env(safe-area-inset-right));}
+
+  header.top{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:18px;
+    gap:12px;
+  }
+  header.top h1{
+    font-size:19px;font-weight:700;margin:0;letter-spacing:-0.01em;
+  }
+  header.top .right{display:flex;align-items:center;gap:10px;}
+  header.top .date{
+    font-size:12.5px;color:var(--text-dim);white-space:nowrap;
+  }
+  .theme-toggle{
+    width:34px;height:34px;border-radius:999px;flex-shrink:0;
+    background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .theme-toggle svg{width:17px;height:17px;}
+
+  .section-title{
+    font-size:13px;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--text-dim);font-weight:700;margin:22px 0 10px;
+  }
+  .section-title:first-of-type{margin-top:0;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:16px;
+    margin-bottom:12px;
+  }
+
+  /* ---- Today tab ---- */
+  .today-hero{
+    background:linear-gradient(150deg,var(--accent-soft),var(--surface) 70%);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px;
+    margin-bottom:18px;
+  }
+  .today-hero .day-label{
+    font-size:13px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  }
+  .today-hero h2{
+    margin:6px 0 4px;font-size:24px;font-weight:800;letter-spacing:-0.01em;
+  }
+  .today-hero p{
+    margin:0;color:var(--text-dim);font-size:14px;line-height:1.5;
+  }
+  .today-hero .go-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:14px;background:var(--accent);color:var(--accent-ink);
+    font-weight:700;font-size:14px;border:none;
+    padding:10px 16px;border-radius:999px;cursor:pointer;
+  }
+
+  .rule-banner{
+    display:flex;gap:10px;align-items:flex-start;
+    background:var(--warn-bg);border:1px solid var(--warn-border);
+    border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;
+    color:var(--warn-text);line-height:1.5;margin-bottom:16px;
+  }
+  .rule-banner svg{flex-shrink:0;margin-top:1px;}
+
+  table.schedule{width:100%;border-collapse:collapse;font-size:14px;}
+  table.schedule td{padding:10px 8px;border-bottom:1px solid var(--border);}
+  table.schedule tr:last-child td{border-bottom:none;}
+  table.schedule td.day{color:var(--text-dim);width:92px;font-weight:600;}
+  table.schedule tr.is-today td{color:var(--accent);font-weight:700;}
+  table.schedule tr.is-today td.day{color:var(--accent);}
+
+  /* ---- Workouts tab ---- */
+  .workout-card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);margin-bottom:14px;overflow:hidden;
+  }
+  .workout-card .wc-head{
+    padding:16px 16px 12px;display:flex;justify-content:space-between;align-items:center;
+  }
+  .workout-card .wc-head h3{margin:0;font-size:16px;font-weight:700;}
+  .workout-card .wc-head .count{font-size:12px;color:var(--text-dim);}
+  .exercise-row{
+    display:flex;align-items:center;gap:12px;
+    padding:12px 16px;border-top:1px solid var(--border);
+  }
+  .exercise-row.done{opacity:.5;}
+  .exercise-row .chk{
+    width:24px;height:24px;border-radius:7px;border:2px solid var(--text-dim);
+    flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;
+    background:transparent;
+  }
+  .exercise-row .chk.checked{background:var(--accent);border-color:var(--accent);}
+  .exercise-row .chk svg{display:none;}
+  .exercise-row .chk.checked svg{display:block;}
+  .exercise-row .ex-info{flex:1;min-width:0;}
+  .exercise-row .ex-name{font-size:14.5px;font-weight:600;}
+  .exercise-row.done .ex-name{text-decoration:line-through;}
+  .exercise-row .ex-reps{font-size:12.5px;color:var(--text-dim);margin-top:2px;}
+  .exercise-row input.weight{
+    width:58px;background:var(--surface-2);border:1px solid var(--border);
+    color:var(--text);border-radius:8px;padding:7px 6px;font-size:13px;text-align:center;
+  }
+  .exercise-row input.weight::placeholder{color:var(--text-dim);}
+  .wc-footer{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:12px 16px;border-top:1px solid var(--border);background:var(--surface-2);
+  }
+  .wc-footer .progress-bar{
+    flex:1;height:6px;background:var(--border);border-radius:99px;margin-right:12px;overflow:hidden;
+  }
+  .wc-footer .progress-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .25s;}
+  .reset-btn{
+    background:none;border:none;color:var(--text-dim);font-size:12.5px;
+    cursor:pointer;text-decoration:underline;flex-shrink:0;
+  }
+
+  /* ---- Meals tab ---- */
+  .meal-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    margin-bottom:16px;overflow:hidden;
+  }
+  .meal-banner{
+    padding:16px;background:linear-gradient(150deg,var(--gold-soft),var(--surface) 75%);
+  }
+  .meal-banner .meal-tag{
+    font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;
+  }
+  .meal-banner h3{margin:4px 0 6px;font-size:19px;font-weight:800;}
+  .meal-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--text-dim);}
+  .meal-meta span{display:flex;align-items:center;gap:5px;}
+  .meal-body{padding:4px 16px 16px;}
+  .meal-sub{font-size:13px;font-weight:700;color:var(--text);margin:14px 0 8px;text-transform:uppercase;letter-spacing:.04em;}
+  ul.ingredients{list-style:none;margin:0;padding:0;}
+  ul.ingredients li{
+    display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:14px;
+    border-bottom:1px solid var(--border);
+  }
+  ul.ingredients li:last-child{border-bottom:none;}
+  ul.ingredients li .dot{width:5px;height:5px;border-radius:50%;background:var(--gold);margin-top:8px;flex-shrink:0;}
+  ol.steps{margin:0;padding:0;list-style:none;counter-reset:step;}
+  ol.steps li{
+    counter-increment:step;position:relative;padding:8px 0 8px 34px;font-size:14px;line-height:1.5;
+    border-bottom:1px solid var(--border);color:var(--text);
+  }
+  ol.steps li:last-child{border-bottom:none;}
+  ol.steps li::before{
+    content:counter(step);position:absolute;left:0;top:8px;
+    width:22px;height:22px;border-radius:50%;background:var(--gold-soft);color:var(--gold);
+    font-size:11.5px;font-weight:700;display:flex;align-items:center;justify-content:center;
+  }
+  .nutrition-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;}
+  .nutrition-grid .n-item{
+    background:var(--surface-2);border-radius:10px;padding:8px 4px;text-align:center;
+  }
+  .nutrition-grid .n-val{font-size:13px;font-weight:700;color:var(--gold);}
+  .nutrition-grid .n-lab{font-size:10px;color:var(--text-dim);margin-top:2px;}
+
+  /* ---- Progress tab ---- */
+  .rule-item{
+    display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--border);
+  }
+  .rule-item:last-child{border-bottom:none;}
+  .rule-item .r-icon{
+    width:34px;height:34px;border-radius:10px;background:var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent);
+  }
+  .rule-item .r-title{font-size:14.5px;font-weight:700;}
+  .rule-item .r-text{font-size:13.5px;color:var(--text-dim);margin-top:3px;line-height:1.5;}
+
+  /* ---- Bottom nav ---- */
+  nav.bottom{
+    position:fixed;bottom:0;left:0;right:0;
+    background:var(--surface);
+    border-top:1px solid var(--border);
+    display:flex;justify-content:space-around;
+    padding:8px calc(8px + env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) calc(8px + env(safe-area-inset-left));
+    max-width:560px;margin:0 auto;
+  }
+  nav.bottom button{
+    background:none;border:none;color:var(--text-dim);
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    font-size:10.5px;font-weight:600;padding:6px 10px;cursor:pointer;border-radius:10px;
+    flex:1;
+  }
+  nav.bottom button.active{color:var(--accent);}
+  nav.bottom button svg{width:22px;height:22px;}
+
+  .tab{display:none;}
+  .tab.active{display:block;animation:fade .2s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+  .empty-note{font-size:12.5px;color:var(--text-dim);text-align:center;padding:10px 0 0;}
+
+  /* ---- Phone frame (mobile = fullscreen, wider viewports = phone mockup) ---- */
+  .frame{width:100%;min-height:100vh;}
+  .screen{width:100%;min-height:100vh;position:relative;}
+  .notch{display:none;}
+
+  @media (any-pointer:fine){
+    html,body{height:100%;}
+    body{
+      display:flex;align-items:center;justify-content:center;
+      min-height:100vh;padding:32px;background:#000;
+      padding-bottom:32px;
+    }
+    .frame{
+      width:min(412px, 90vw, calc(88vh * 9 / 16));
+      aspect-ratio:9/16;
+      min-height:0;
+      border-radius:22px;
+      overflow:hidden;
+      position:relative;
+      background:var(--bg);
+      box-shadow:0 30px 80px rgba(0,0,0,.6), 0 0 0 10px #0d0d0f, 0 0 0 12px #2b2b2f;
+    }
+    .screen{
+      position:absolute;inset:0;min-height:0;
+      overflow-y:auto;-webkit-overflow-scrolling:touch;
+    }
+    .notch{
+      display:block;position:absolute;top:14px;left:50%;transform:translateX(-50%);
+      width:90px;height:22px;background:#000;border-radius:20px;z-index:20;
+    }
+    .app{padding-top:calc(20px + env(safe-area-inset-top) + 14px);}
+    nav.bottom{position:absolute;}
+  }
+</style>
+</head>
+<body>
+
+<div class="frame">
+<div class="notch"></div>
+<div class="screen">
+<div class="app">
+
+  <header class="top">
+    <div class="date" id="todayDate"></div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode"></button>
+  </header>
+
+  <!-- TODAY TAB -->
+  <div class="tab active" id="tab-today">
+    <div class="today-hero" id="heroCard">
+      <div class="day-label" id="heroDayLabel">TODAY</div>
+      <h2 id="heroWorkoutName">—</h2>
+      <p id="heroWorkoutSub"></p>
+      <button class="go-btn" id="heroGoBtn">Go to workout →</button>
+    </div>
+
+    <div class="rule-banner">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86l-8.15 14.1A2 2 0 0 0 3.86 21h16.28a2 2 0 0 0 1.72-3.03l-8.15-14.1a2 2 0 0 0-3.42 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>If you go to parkour Monday or Wednesday, skip the Upper Body workout that day. Use weights you can control with clean form.</span>
+    </div>
+
+    <div class="section-title">Weekly Schedule</div>
+    <div class="card">
+      <table class="schedule" id="scheduleTable"></table>
+    </div>
+  </div>
+
+  <!-- WORKOUTS TAB -->
+  <div class="tab" id="tab-workouts">
+    <div class="section-title">Your Workouts</div>
+    <div id="workoutsContainer"></div>
+    <div class="empty-note">Checkmarks and weights reset when you reload the app — they're just for tracking during today's session.</div>
+  </div>
+
+  <!-- MEALS TAB -->
+  <div class="tab" id="tab-meals">
+    <div class="section-title">Meals</div>
+    <div id="mealsContainer"></div>
+  </div>
+
+  <!-- PROGRESS TAB -->
+  <div class="tab" id="tab-progress">
+    <div class="section-title">How To Progress</div>
+    <div class="card" id="progressCard"></div>
+  </div>
+
+</div>
+</div>
+
+<nav class="bottom">
+  <button class="nav-btn active" data-tab="today">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 0 0 1 1h3m10-11l2 2m-2-2v10a1 1 0 0 1-1 1h-3m-6 0a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Today
+  </button>
+  <button class="nav-btn" data-tab="workouts">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 6.5l11 11M20.4 3.6l-2.8 2.8m-11.2 11.2l-2.8 2.8M3 8l3-3m10 10l3-3M17 4l-2 2m-6 12l-2 2M8 5l1.5 1.5M14.5 17.5L16 19" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 12h.01M18 12h.01" stroke-linecap="round"/></svg>
+    Workouts
+  </button>
+  <button class="nav-btn" data-tab="meals">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8ZM6 1v3M10 1v3M14 1v3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Meals
+  </button>
+  <button class="nav-btn" data-tab="progress">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18M18 17V9M13 17V5M8 17v-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Progress
+  </button>
+</nav>
+</div>
+
+<script>
+/* ---------------- Data ---------------- */
+
+const schedule = [
+  {day:"Monday", workout:"Parkour OR Upper Body", key:"upper"},
+  {day:"Tuesday", workout:"Lower Body + Core", key:"lower"},
+  {day:"Wednesday", workout:"Parkour OR Upper Body", key:"upper"},
+  {day:"Thursday", workout:"Rest / easy recovery", key:"rest"},
+  {day:"Friday", workout:"Full Body", key:"full"},
+  {day:"Saturday", workout:"Parkour OR Dirt Bike / Rest", key:"rest"},
+  {day:"Sunday", workout:"Rest", key:"rest"},
+];
+
+const workouts = {
+  upper: {
+    name:"Upper Body",
+    exercises:[
+      {name:"Dumbbell Bench Press", reps:"3 sets of 8–12 reps"},
+      {name:"One-Arm Dumbbell Row", reps:"3 sets of 8–12 reps each arm"},
+      {name:"Dumbbell Shoulder Press", reps:"3 sets of 8–12 reps"},
+      {name:"Dumbbell Lateral Raises", reps:"3 sets of 12–15 reps"},
+      {name:"Dumbbell Bicep Curls", reps:"2 sets of 10–15 reps"},
+      {name:"Lying Dumbbell Tricep Extensions", reps:"2 sets of 10–15 reps"},
+    ]
+  },
+  lower: {
+    name:"Lower Body + Core",
+    exercises:[
+      {name:"Goblet Squat", reps:"3 sets of 8–12 reps"},
+      {name:"Dumbbell Romanian Deadlift", reps:"3 sets of 8–12 reps"},
+      {name:"Bulgarian Split Squat", reps:"3 sets of 8 reps each leg"},
+      {name:"Dumbbell Calf Raises", reps:"3 sets of 15–20 reps"},
+      {name:"Lying Leg Raises", reps:"3 sets of 10–15 reps"},
+      {name:"Plank", reps:"3 sets of 30–60 seconds"},
+    ]
+  },
+  full: {
+    name:"Full Body",
+    exercises:[
+      {name:"Goblet Squat", reps:"3 sets of 8–12 reps"},
+      {name:"Dumbbell Bench Press", reps:"3 sets of 8–12 reps"},
+      {name:"One-Arm Dumbbell Row", reps:"3 sets of 8–12 reps each arm"},
+      {name:"Dumbbell Romanian Deadlift", reps:"3 sets of 8–12 reps"},
+      {name:"Dumbbell Lateral Raises", reps:"3 sets of 12–15 reps"},
+      {name:"Dumbbell Hammer Curls", reps:"2 sets of 10–15 reps"},
+      {name:"Lying Leg Raises", reps:"3 sets of 10–15 reps"},
+    ]
+  }
+};
+
+const progressRules = [
+  {title:"Pick a weight", text:"Use a dumbbell weight you can control with clean form.", icon:"dumbbell"},
+  {title:"Rep range", text:"If it says 8–12 reps, do at least 8 and no more than 12 with clean form.", icon:"target"},
+  {title:"Move up", text:"When you can do the top number of reps for every set with clean form, use slightly heavier dumbbells next time.", icon:"trend"},
+  {title:"Rest", text:"Rest about 1–2 minutes between sets. Take more time if you need it.", icon:"clock"},
+  {title:"Parkour", text:"Do not force a lifting workout after a hard parkour session.", icon:"warn"},
+];
+
+const meals = [
+  {
+    tag:"Breakfast",
+    name:"Breakfast Burritos",
+    author:"Kristine Rosenblatt",
+    servings:"8 servings",
+    prep:"35 min prep",
+    cook:"5 min cook",
+    total:"40 min total",
+    desc:"Sausage, eggs, cheese and veggies wrapped up and crisped in the oven. Make the full batch and freeze extras for quick mornings.",
+    ingredients:[
+      "1 tablespoon olive oil",
+      "2 cups chopped vegetables (red onion, bell pepper, mushrooms, or broccoli)",
+      "1 pound breakfast sausage or Italian sausage, removed from casings",
+      "8 eggs",
+      "2 pinches salt, to taste",
+      "2 teaspoons unsalted butter",
+      "8 burrito-size tortillas",
+      "2 cups shredded cheddar cheese (or Monterey jack / pepper jack)",
+    ],
+    steps:[
+      "Sauté the veggies: heat olive oil in a skillet, add chopped vegetables, cook until softened. Transfer to a mixing bowl.",
+      "Brown the sausage in the same pan, crumbling it, until fully cooked. Add to the bowl, leaving grease behind.",
+      "Whisk eggs with a couple pinches of salt. Wipe out the skillet, melt the butter, scramble the eggs. Add to the bowl and mix everything together.",
+      "Assemble: place 1/8 of the filling on each tortilla, sprinkle with cheese, and wrap tightly burrito-style.",
+      "Optional: bake 5–10 minutes to crisp the tortillas and melt the cheese. Freeze extras for later — thaw overnight, then microwave 30–45 sec and finish in a 350°F oven for 10 min.",
+    ],
+    nutrition:null
+  },
+  {
+    tag:"Lunch",
+    name:"Chicken Quesadillas",
+    author:null,
+    servings:"4 quesadillas",
+    prep:null,
+    cook:"~15 min",
+    total:null,
+    desc:"Cheesy, golden, and endlessly customizable — sautéed peppers and onions with seasoned chicken, folded into a crisp tortilla.",
+    ingredients:[
+      "2 boneless, skinless chicken breasts, cut into thin strips",
+      "1 tbsp vegetable oil (plus more for cooking)",
+      "1 medium onion, thinly sliced",
+      "1 bell pepper, thinly sliced",
+      "Salt and black pepper, to taste",
+      "1 tsp chili powder",
+      "1 tsp cumin",
+      "1/2 tsp garlic powder",
+      "4 large flour tortillas",
+      "2 cups shredded Monterey Jack cheese",
+      "2 cups shredded cheddar cheese",
+      "1 ripe avocado, sliced (optional)",
+      "2 green onions, finely sliced (optional)",
+      "Cooking spray or additional oil for the pan",
+    ],
+    steps:[
+      "Sauté the peppers and onions in a drizzle of oil over medium heat until softened, about 5 minutes. Transfer to a plate.",
+      "In the same pan, cook the chicken strips seasoned with chili powder, cumin, garlic powder, salt and pepper until golden and cooked through, 6–8 minutes.",
+      "Assemble: lay a tortilla in the pan, layer cheese, chicken, and the pepper/onion mix on one half, top with a little more cheese, then fold the tortilla over.",
+      "Cook 2–3 minutes per side until golden brown and the cheese is melted, flipping carefully once.",
+      "Slice into wedges and serve with sour cream, salsa, avocado, or pickled jalapeños.",
+    ],
+    nutrition:{cal:"420–480", fat:"20–25g", protein:"28–32g", carbs:"32–40g"}
+  }
+];
+
+/* ---------------- State (in-memory only, resets on reload) ---------------- */
+const state = {
+  checks: {}, // key: workoutKey+idx -> bool
+  weights: {} // key: workoutKey+idx -> string
+};
+
+/* ---------------- Render helpers ---------------- */
+const iconCheck = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="var(--bg)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const progressIcons = {
+  dumbbell: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 6.5l11 11M20.4 3.6l-2.8 2.8m-11.2 11.2l-2.8 2.8M3 8l3-3m10 10l3-3M17 4l-2 2m-6 12l-2 2M8 5l1.5 1.5M14.5 17.5L16 19" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  target: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>`,
+  trend: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8M15 7h6v6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  clock: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  warn: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4M12 17h.01M10.29 3.86l-8.15 14.1A2 2 0 0 0 3.86 21h16.28a2 2 0 0 0 1.72-3.03l-8.15-14.1a2 2 0 0 0-3.42 0Z" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+};
+
+const iconMoon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const iconSun = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke-linecap="round"/></svg>`;
+
+function todayIndex(){
+  // JS getDay(): 0=Sun..6=Sat. Our schedule array is Mon..Sun (index 0..6)
+  const d = new Date().getDay();
+  return d === 0 ? 6 : d - 1;
+}
+
+function renderHero(){
+  const idx = todayIndex();
+  const entry = schedule[idx];
+  document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-US',{weekday:'short', month:'short', day:'numeric'});
+  document.getElementById('heroDayLabel').textContent = "TODAY — " + entry.day.toUpperCase();
+  document.getElementById('heroWorkoutName').textContent = entry.workout;
+
+  const btn = document.getElementById('heroGoBtn');
+  if(entry.key === 'rest'){
+    document.getElementById('heroWorkoutSub').textContent = "Rest day. Light movement is fine, but let your muscles recover.";
+    btn.style.display = 'none';
+  } else {
+    document.getElementById('heroWorkoutSub').textContent = "Tap below to jump straight into today's exercises.";
+    btn.style.display = 'inline-flex';
+    btn.onclick = () => {
+      switchTab('workouts');
+      setTimeout(()=>{
+        const el = document.getElementById('wc-'+entry.key);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 80);
+    };
+  }
+}
+
+function renderSchedule(){
+  const idx = todayIndex();
+  const table = document.getElementById('scheduleTable');
+  table.innerHTML = schedule.map((s,i)=>`
+    <tr class="${i===idx?'is-today':''}">
+      <td class="day">${s.day}</td>
+      <td>${s.workout}</td>
+    </tr>
+  `).join('');
+}
+
+function renderWorkouts(){
+  const container = document.getElementById('workoutsContainer');
+  container.innerHTML = Object.keys(workouts).map(key=>{
+    const w = workouts[key];
+    const total = w.exercises.length;
+    return `
+    <div class="workout-card" id="wc-${key}">
+      <div class="wc-head">
+        <h3>${w.name}</h3>
+        <div class="count" id="count-${key}">0 / ${total} done</div>
+      </div>
+      ${w.exercises.map((ex,i)=>{
+        const ck = `${key}-${i}`;
+        return `
+        <div class="exercise-row" data-ck="${ck}">
+          <button class="chk" data-ck="${ck}">${iconCheck}</button>
+          <div class="ex-info">
+            <div class="ex-name">${ex.name}</div>
+            <div class="ex-reps">${ex.reps}</div>
+          </div>
+          <input class="weight" data-ck="${ck}" type="text" inputmode="decimal" placeholder="lbs">
+        </div>`;
+      }).join('')}
+      <div class="wc-footer">
+        <div class="progress-bar"><div class="progress-fill" id="fill-${key}" style="width:0%"></div></div>
+        <button class="reset-btn" data-reset="${key}">Reset</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  container.querySelectorAll('.chk').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const ck = btn.dataset.ck;
+      state.checks[ck] = !state.checks[ck];
+      updateExerciseUI(ck);
+    });
+  });
+  container.querySelectorAll('input.weight').forEach(inp=>{
+    inp.addEventListener('input', ()=>{
+      state.weights[inp.dataset.ck] = inp.value;
+    });
+  });
+  container.querySelectorAll('[data-reset]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const key = btn.dataset.reset;
+      workouts[key].exercises.forEach((_,i)=>{
+        const ck = `${key}-${i}`;
+        state.checks[ck] = false;
+        state.weights[ck] = '';
+        const inp = container.querySelector(`input.weight[data-ck="${ck}"]`);
+        if(inp) inp.value = '';
+        updateExerciseUI(ck);
+      });
+    });
+  });
+}
+
+function updateExerciseUI(ck){
+  const [key] = ck.split('-');
+  const row = document.querySelector(`.exercise-row[data-ck="${ck}"]`);
+  const btn = document.querySelector(`.chk[data-ck="${ck}"]`);
+  const checked = !!state.checks[ck];
+  row.classList.toggle('done', checked);
+  btn.classList.toggle('checked', checked);
+
+  const total = workouts[key].exercises.length;
+  const done = workouts[key].exercises.reduce((n,_,i)=> n + (state.checks[`${key}-${i}`] ? 1 : 0), 0);
+  document.getElementById(`count-${key}`).textContent = `${done} / ${total} done`;
+  document.getElementById(`fill-${key}`).style.width = `${Math.round(done/total*100)}%`;
+}
+
+function renderMeals(){
+  const container = document.getElementById('mealsContainer');
+  container.innerHTML = meals.map(m=>`
+    <div class="meal-card">
+      <div class="meal-banner">
+        <div class="meal-tag">${m.tag}</div>
+        <h3>${m.name}</h3>
+        <div class="meal-meta">
+          ${m.servings ? `<span>${m.servings}</span>` : ''}
+          ${m.prep ? `<span>${m.prep}</span>` : ''}
+          ${m.cook ? `<span>${m.cook}</span>` : ''}
+          ${m.total ? `<span>${m.total}</span>` : ''}
+        </div>
+      </div>
+      <div class="meal-body">
+        <p style="font-size:13.5px;color:var(--text-dim);line-height:1.5;margin:12px 0 0;">${m.desc}</p>
+        <div class="meal-sub">Ingredients</div>
+        <ul class="ingredients">
+          ${m.ingredients.map(ing=>`<li><span class="dot"></span>${ing}</li>`).join('')}
+        </ul>
+        <div class="meal-sub">Steps</div>
+        <ol class="steps">
+          ${m.steps.map(s=>`<li>${s}</li>`).join('')}
+        </ol>
+        ${m.nutrition ? `
+        <div class="meal-sub">Nutrition (per serving)</div>
+        <div class="nutrition-grid">
+          <div class="n-item"><div class="n-val">${m.nutrition.cal}</div><div class="n-lab">CAL</div></div>
+          <div class="n-item"><div class="n-val">${m.nutrition.fat}</div><div class="n-lab">FAT</div></div>
+          <div class="n-item"><div class="n-val">${m.nutrition.protein}</div><div class="n-lab">PROTEIN</div></div>
+          <div class="n-item"><div class="n-val">${m.nutrition.carbs}</div><div class="n-lab">CARBS</div></div>
+        </div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderProgress(){
+  const card = document.getElementById('progressCard');
+  card.innerHTML = progressRules.map(r=>`
+    <div class="rule-item">
+      <div class="r-icon">${progressIcons[r.icon]}</div>
+      <div>
+        <div class="r-title">${r.title}</div>
+        <div class="r-text">${r.text}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ---------------- Tabs ---------------- */
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelector(`.nav-btn[data-tab="${name}"]`).classList.add('active');
+  window.scrollTo({top:0});
+}
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=> switchTab(btn.dataset.tab));
+});
+
+/* ---------------- Theme ---------------- */
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeToggle').innerHTML = theme === 'dark' ? iconSun : iconMoon;
+}
+let currentTheme = 'dark';
+document.getElementById('themeToggle').addEventListener('click', ()=>{
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  applyTheme(currentTheme);
+});
+applyTheme(currentTheme);
+
+/* ---------------- Init ---------------- */
+renderHero();
+renderSchedule();
+renderWorkouts();
+renderMeals();
+renderProgress();
+</script>
+</body>
+</html>
