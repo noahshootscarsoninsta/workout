@@ -100,9 +100,16 @@
     padding:20px;
     margin-bottom:18px;
   }
+  .hero-top-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
   .today-hero .day-label{
     font-size:13px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.06em;
   }
+  .streak-badge{
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--surface-2);border:1px solid var(--border);color:var(--text-dim);
+    padding:5px 11px;border-radius:999px;font-size:13px;font-weight:800;flex-shrink:0;
+  }
+  .streak-badge.hot{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
   .today-hero h2{
     margin:6px 0 4px;font-size:24px;font-weight:800;letter-spacing:-0.01em;
   }
@@ -228,6 +235,69 @@
   }
   .rule-item .r-title{font-size:14.5px;font-weight:700;}
   .rule-item .r-text{font-size:13.5px;color:var(--text-dim);margin-top:3px;line-height:1.5;}
+
+  /* ---- Meals: category pills + mini recipes ---- */
+  .cat-pills{
+    display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:18px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .cat-pills::-webkit-scrollbar{display:none;}
+  .cat-pill{
+    flex-shrink:0;background:var(--surface-2);border:1px solid var(--border);color:var(--text-dim);
+    font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap;
+  }
+  .meal-section-title{
+    display:flex;align-items:center;gap:8px;
+    font-size:15px;font-weight:800;margin:26px 0 10px;
+    scroll-margin-top:24px;
+  }
+  .meal-section-title:first-of-type{margin-top:0;}
+  .meal-section-title .emoji{font-size:16px;}
+
+  .mini-recipe{
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    padding:14px;margin-bottom:10px;
+  }
+  .mini-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px;}
+  .mini-head h4{margin:0;font-size:14.5px;font-weight:700;}
+  .protein-badge{
+    flex-shrink:0;font-size:10.5px;font-weight:700;color:var(--gold);
+    background:var(--gold-soft);padding:3px 8px;border-radius:999px;white-space:nowrap;
+  }
+  .mini-ingredients{font-size:12.5px;color:var(--text-dim);line-height:1.5;}
+  .mini-note{font-size:12px;color:var(--text);opacity:.75;margin-top:6px;font-style:italic;}
+
+  .simple-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px;}
+  .simple-list-item{
+    background:var(--surface);border:1px solid var(--border);border-radius:10px;
+    padding:10px 12px;font-size:12.5px;line-height:1.4;display:flex;align-items:flex-start;gap:8px;
+  }
+  .simple-list-item .dot{width:5px;height:5px;border-radius:50%;background:var(--gold);margin-top:5px;flex-shrink:0;}
+
+  .timing-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:16px;margin-bottom:14px;
+  }
+  .timing-card h4{margin:0 0 4px;font-size:14.5px;font-weight:700;}
+  .timing-card .timing-sub{font-size:12px;color:var(--text-dim);margin-bottom:10px;}
+  .timing-card ul{margin:0;padding:0;list-style:none;}
+  .timing-card li{
+    display:flex;gap:8px;padding:7px 0;font-size:13.5px;border-top:1px solid var(--border);
+  }
+  .timing-card li:first-child{border-top:none;}
+  .timing-card li .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:8px;flex-shrink:0;}
+
+  .grocery-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;
+  }
+  .grocery-group{margin-bottom:16px;}
+  .grocery-group:last-child{margin-bottom:0;}
+  .grocery-group h5{
+    margin:0 0 8px;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--gold);font-weight:700;
+  }
+  .grocery-group ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;}
+  .grocery-group li{font-size:13px;color:var(--text);padding:2px 0;}
 
   /* ---- Progress photos ---- */
   .photos-toolbar{
@@ -381,7 +451,10 @@
   <!-- TODAY TAB -->
   <div class="tab active" id="tab-today">
     <div class="today-hero" id="heroCard">
-      <div class="day-label" id="heroDayLabel">TODAY</div>
+      <div class="hero-top-row">
+        <div class="day-label" id="heroDayLabel">TODAY</div>
+        <div class="streak-badge" id="streakBadge">🔥 <span id="streakCount">0</span></div>
+      </div>
       <h2 id="heroWorkoutName">—</h2>
       <p id="heroWorkoutSub"></p>
       <button class="go-btn" id="heroGoBtn">Go to workout →</button>
@@ -402,12 +475,13 @@
   <div class="tab" id="tab-workouts">
     <div class="section-title">Your Workouts</div>
     <div id="workoutsContainer"></div>
-    <div class="empty-note">Checkmarks and weights reset when you reload the app — they're just for tracking during today's session.</div>
+    <div class="empty-note">Your checkmarks and weights for today are saved automatically, so closing the app won't undo them. Each new day starts fresh, and finishing your scheduled workout keeps your streak going.</div>
   </div>
 
   <!-- MEALS TAB -->
   <div class="tab" id="tab-meals">
     <div class="section-title">Meals</div>
+    <div class="cat-pills" id="mealPills"></div>
     <div id="mealsContainer"></div>
   </div>
 
@@ -441,7 +515,7 @@
     </div>
     <div class="section-title" id="todayWorkoutHeading">Today's Workout</div>
     <div id="todayWorkoutContainer"></div>
-    <div class="empty-note">Checkmarks and weights reset when you reload the app — they're just for tracking during today's session.</div>
+    <div class="empty-note">Your checkmarks and weights for today are saved automatically, so closing the app won't undo them. Each new day starts fresh, and finishing your scheduled workout keeps your streak going.</div>
   </div>
 
 </div>
@@ -551,11 +625,10 @@ const progressRules = [
   {title:"Parkour", text:"Do not force a lifting workout after a hard parkour session.", icon:"warn"},
 ];
 
-const meals = [
-  {
+const fullRecipes = {
+  breakfastBurritos: {
     tag:"Breakfast",
     name:"Breakfast Burritos",
-    author:"Kristine Rosenblatt",
     servings:"8 servings",
     prep:"35 min prep",
     cook:"5 min cook",
@@ -580,10 +653,9 @@ const meals = [
     ],
     nutrition:null
   },
-  {
+  chickenQuesadillas: {
     tag:"Lunch",
     name:"Chicken Quesadillas",
-    author:null,
     servings:"4 quesadillas",
     prep:null,
     cook:"~15 min",
@@ -614,9 +686,148 @@ const meals = [
     ],
     nutrition:{cal:"420–480", fat:"20–25g", protein:"28–32g", carbs:"32–40g"}
   }
+};
+
+const mealSections = [
+  {
+    key:"breakfast", title:"Breakfast", emoji:"🥞",
+    items:[
+      { full: fullRecipes.breakfastBurritos },
+      {
+        name:"Peanut Butter Banana Oatmeal",
+        ingredients:["1 cup rolled oats","1½ cups milk","1 banana","2 tbsp peanut butter","Cinnamon","Honey (optional)"],
+        note:"Mix together after cooking the oats.",
+        protein:"~20g"
+      },
+      {
+        name:"Chocolate Peanut Butter Smoothie",
+        ingredients:["1 banana","1 cup milk","½ cup rolled oats","2 tbsp peanut butter","Frozen berries","Cocoa powder","Ice"],
+        protein:"18-25g"
+      },
+      {
+        name:"Quick Breakfast Burrito",
+        ingredients:["3 eggs","Cheese","Salsa","Tortilla","Avocado (optional)"],
+        note:"Add bacon or sausage if you want more calories.",
+        protein:"25-35g"
+      },
+    ]
+  },
+  {
+    key:"smoothies", title:"Smoothies", emoji:"🍓",
+    items:[
+      {
+        name:"Mango Blueberry Smoothie",
+        ingredients:["Mango","Blueberries","Rolled oats","Peanut butter","Milk","Ice"],
+        note:"Great about an hour before training."
+      },
+      {
+        name:"Strawberry Cheesecake Smoothie",
+        ingredients:["Frozen strawberries","Milk","Cottage cheese","Vanilla","Honey","Oats"],
+        note:"You barely taste the cottage cheese."
+      },
+      {
+        name:"Chocolate Banana Bulk Shake",
+        ingredients:["Banana","Peanut butter","Chocolate milk","Oats","Ice"],
+        note:"Simple but packs calories."
+      },
+    ]
+  },
+  {
+    key:"lunch", title:"Lunch", emoji:"🌮",
+    items:[
+      { full: fullRecipes.chickenQuesadillas },
+      {
+        name:"BBQ Chicken Wrap",
+        ingredients:["Tortilla","Grilled chicken","Cheese","Lettuce","BBQ sauce"],
+        note:"Even if you're not a huge chicken fan, BBQ sauce helps."
+      },
+      {
+        name:"Steak Quesadilla",
+        ingredients:["Tortillas","Steak","Cheese","Peppers","Onions"],
+        note:"Serve with salsa."
+      },
+      {
+        name:"Loaded Turkey Wrap",
+        ingredients:["Turkey","Cheese","Bacon","Lettuce","Ranch","Tortilla"]
+      },
+      {
+        name:"Homemade Crunchwrap",
+        ingredients:["Ground beef","Cheese","Tortilla","Sour cream","Lettuce","Tomatoes"]
+      },
+    ]
+  },
+  {
+    key:"dinner", title:"Dinner", emoji:"🍝",
+    items:[
+      {
+        name:"Garlic Butter Steak Bites",
+        ingredients:["Steak","Potatoes","Garlic butter"]
+      },
+      {
+        name:"Beef Taco Bowls",
+        ingredients:["Rice","Taco meat","Cheese","Salsa","Corn","Black beans"]
+      },
+      {
+        name:"Pulled Pork Tacos",
+        ingredients:["Pulled pork","Tortillas","Cheese","BBQ sauce"]
+      },
+      {
+        name:"Homemade Burgers",
+        ingredients:["Beef patties","Cheese","Lettuce","Tomato"],
+        note:"Serve with roasted potatoes instead of fries."
+      },
+    ]
+  },
+  {
+    key:"desserts", title:"Healthy Desserts", emoji:"🍪",
+    items:[
+      {
+        name:"Protein Cookie Dough",
+        ingredients:["Peanut butter","Oat flour (blend rolled oats)","Honey","Vanilla","Chocolate chips"]
+      },
+      {
+        name:"Frozen Peanut Butter Banana Bites",
+        ingredients:["Bananas","Peanut butter","Melted chocolate (optional drizzle)"],
+        note:"Slice bananas, spread peanut butter between two slices, freeze, then drizzle with melted chocolate if you want."
+      },
+      {
+        name:"Chocolate Oat Energy Balls",
+        ingredients:["Peanut butter","Oats","Honey","Chocolate chips"],
+        note:"Roll into balls and refrigerate."
+      },
+    ]
+  }
 ];
 
-/* ---------------- State (in-memory only, resets on reload) ---------------- */
+const proteinSnacks = [
+  "Peanut butter on tortillas","Cheese sticks","Beef jerky","Mixed nuts",
+  "Greek yogurt (if you don't mind yogurt)","Trail mix","Apples with peanut butter",
+  "Protein smoothie","Cottage cheese with fruit","Homemade popcorn"
+];
+
+const workoutTiming = {
+  before:{
+    heading:"Before a Workout",
+    sub:"30–90 minutes beforehand — choose one:",
+    options:["Mango blueberry smoothie","Banana with peanut butter","Oatmeal","Tortilla with peanut butter and honey","Apple and peanut butter"]
+  },
+  after:{
+    heading:"After a Workout",
+    sub:"Within about an hour — aim for protein plus carbs:",
+    options:["Chocolate milk + turkey wrap","Steak quesadilla","Eggs and tortillas","Beef taco bowl","Peanut butter smoothie plus a cheese stick"]
+  }
+};
+
+const groceryList = [
+  { group:"Protein", items:["Eggs","Ground beef","Steak","Turkey","Chicken (for wraps if you're okay with it)","Cheese","Cottage cheese","Milk"] },
+  { group:"Carbs", items:["Rolled oats","Tortillas","Potatoes","Rice","Bananas","Mango","Blueberries","Strawberries"] },
+  { group:"Healthy Fats", items:["Peanut butter","Mixed nuts","Avocados"] },
+  { group:"Extras", items:["Honey","Salsa","BBQ sauce","Cinnamon","Cocoa powder"] },
+];
+
+/* ---------------- State ---------------- */
+// checks/weights below mirror what's saved so the UI has something to render immediately;
+// photos stay in-memory only (session-only) — see Progress Photos section.
 const state = {
   checks: {}, // key: workoutKey+idx -> bool
   weights: {}, // key: workoutKey+idx -> string
@@ -625,6 +836,95 @@ const state = {
   compareSelection: [],
   lightboxId: null
 };
+
+/* ---------------- Persistence ----------------
+   Saves workout completion history + weights so your streak and today's
+   checkmarks survive closing the app. This only works when the page is
+   opened from its real hosted address (e.g. your home-screen icon) — a
+   quick preview inside a sandboxed viewer may not keep it, but that's
+   fine, it just won't crash there either. */
+const STORAGE_KEY = 'workoutAppData_v1';
+
+function todayISO(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function loadPersisted(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      return {
+        completions: parsed.completions || {},
+        weights: parsed.weights || {}
+      };
+    }
+  }catch(e){ /* storage unavailable in this view — fall back to session-only */ }
+  return { completions: {}, weights: {} };
+}
+
+function savePersisted(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted));
+  }catch(e){ /* ignore — session-only fallback */ }
+}
+
+const persisted = loadPersisted();
+
+// Rehydrate: bring back today's checkmarks and any saved weights so reopening
+// the app after finishing a workout doesn't show it as undone.
+(function rehydrate(){
+  const todaysCompletions = persisted.completions[todayISO()] || {};
+  Object.keys(todaysCompletions).forEach(ck => { state.checks[ck] = todaysCompletions[ck]; });
+  Object.keys(persisted.weights).forEach(ck => { state.weights[ck] = persisted.weights[ck]; });
+})();
+
+function recordCompletion(ck, value){
+  const today = todayISO();
+  if(!persisted.completions[today]) persisted.completions[today] = {};
+  persisted.completions[today][ck] = value;
+  savePersisted();
+  updateStreakUI();
+}
+
+function isScheduleDayComplete(dateObj){
+  const dow = dateObj.getDay();
+  const idx = dow === 0 ? 6 : dow - 1;
+  const entry = schedule[idx];
+  if(entry.key === 'rest') return true; // rest days don't require a check-in
+  const dateStr = `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}-${String(dateObj.getDate()).padStart(2,'0')}`;
+  const dayChecks = persisted.completions[dateStr] || {};
+  const total = workouts[entry.key].exercises.length;
+  const done = workouts[entry.key].exercises.reduce((n,_,i)=> n + (dayChecks[`${entry.key}-${i}`] ? 1 : 0), 0);
+  return total > 0 && done === total;
+}
+
+function computeStreak(){
+  let streak = 0;
+  const d = new Date();
+  for(let i=0; i<3650; i++){
+    const complete = isScheduleDayComplete(d);
+    if(i === 0){
+      if(complete) streak++; // today only adds to the streak once it's actually done
+    } else if(complete){
+      streak++;
+    } else {
+      break; // first incomplete past day ends the streak
+    }
+    d.setDate(d.getDate() - 1);
+  }
+  return streak;
+}
+
+function updateStreakUI(){
+  const countEl = document.getElementById('streakCount');
+  const badge = document.getElementById('streakBadge');
+  if(!countEl || !badge) return;
+  const n = computeStreak();
+  countEl.textContent = n;
+  badge.classList.toggle('hot', n > 0);
+}
 
 /* ---------------- Render helpers ---------------- */
 const iconCheck = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="var(--bg)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -682,26 +982,29 @@ const CARD_SCOPES = ['workouts','todayworkout'];
 function buildWorkoutCardHTML(key, scope){
   const w = workouts[key];
   const total = w.exercises.length;
+  const doneCount = w.exercises.reduce((n,_,i)=> n + (state.checks[`${key}-${i}`] ? 1 : 0), 0);
   return `
   <div class="workout-card" id="wc-${scope}-${key}">
     <div class="wc-head">
       <h3>${w.name}</h3>
-      <div class="count" id="count-${scope}-${key}">0 / ${total} done</div>
+      <div class="count" id="count-${scope}-${key}">${doneCount} / ${total} done</div>
     </div>
     ${w.exercises.map((ex,i)=>{
       const ck = `${key}-${i}`;
+      const checked = !!state.checks[ck];
+      const weightVal = state.weights[ck] || '';
       return `
-      <div class="exercise-row" data-ck="${ck}">
-        <button class="chk" data-ck="${ck}">${iconCheck}</button>
+      <div class="exercise-row ${checked ? 'done' : ''}" data-ck="${ck}">
+        <button class="chk ${checked ? 'checked' : ''}" data-ck="${ck}">${iconCheck}</button>
         <div class="ex-info">
           <div class="ex-name">${ex.name}</div>
           <div class="ex-reps">${ex.reps}</div>
         </div>
-        <input class="weight" data-ck="${ck}" type="text" inputmode="decimal" placeholder="lbs">
+        <input class="weight" data-ck="${ck}" type="text" inputmode="decimal" placeholder="lbs" value="${weightVal}">
       </div>`;
     }).join('')}
     <div class="wc-footer">
-      <div class="progress-bar"><div class="progress-fill" id="fill-${scope}-${key}" style="width:0%"></div></div>
+      <div class="progress-bar"><div class="progress-fill" id="fill-${scope}-${key}" style="width:${total ? Math.round(doneCount/total*100) : 0}%"></div></div>
       <button class="reset-btn" data-reset="${key}">Reset</button>
     </div>
   </div>`;
@@ -713,6 +1016,7 @@ function wireWorkoutCard(container){
       const ck = btn.dataset.ck;
       state.checks[ck] = !state.checks[ck];
       updateExerciseUI(ck);
+      recordCompletion(ck, state.checks[ck]);
     });
   });
   container.querySelectorAll('input.weight').forEach(inp=>{
@@ -723,6 +1027,8 @@ function wireWorkoutCard(container){
       document.querySelectorAll(`input.weight[data-ck="${ck}"]`).forEach(other=>{
         if(other !== inp) other.value = inp.value;
       });
+      persisted.weights[ck] = inp.value;
+      savePersisted();
     });
   });
   container.querySelectorAll('[data-reset]').forEach(btn=>{
@@ -734,7 +1040,10 @@ function wireWorkoutCard(container){
         state.weights[ck] = '';
         document.querySelectorAll(`input.weight[data-ck="${ck}"]`).forEach(inp=> inp.value = '');
         updateExerciseUI(ck);
+        recordCompletion(ck, false);
+        delete persisted.weights[ck];
       });
+      savePersisted();
     });
   });
 }
@@ -776,9 +1085,8 @@ function updateExerciseUI(ck){
   });
 }
 
-function renderMeals(){
-  const container = document.getElementById('mealsContainer');
-  container.innerHTML = meals.map(m=>`
+function fullRecipeHTML(m){
+  return `
     <div class="meal-card">
       <div class="meal-banner">
         <div class="meal-tag">${m.tag}</div>
@@ -809,8 +1117,79 @@ function renderMeals(){
           <div class="n-item"><div class="n-val">${m.nutrition.carbs}</div><div class="n-lab">CARBS</div></div>
         </div>` : ''}
       </div>
-    </div>
+    </div>`;
+}
+
+function miniRecipeHTML(r){
+  return `
+    <div class="mini-recipe">
+      <div class="mini-head">
+        <h4>${r.name}</h4>
+        ${r.protein ? `<span class="protein-badge">${r.protein} protein</span>` : ''}
+      </div>
+      <div class="mini-ingredients">${r.ingredients.join(' · ')}</div>
+      ${r.note ? `<div class="mini-note">${r.note}</div>` : ''}
+    </div>`;
+}
+
+function timingCardHTML(t){
+  return `
+    <div class="timing-card">
+      <h4>${t.heading}</h4>
+      <div class="timing-sub">${t.sub}</div>
+      <ul>
+        ${t.options.map(o=>`<li><span class="dot"></span>${o}</li>`).join('')}
+      </ul>
+    </div>`;
+}
+
+const MEAL_PILLS = [
+  ...mealSections.map(s => ({ id:s.key, label:`${s.emoji} ${s.title}` })),
+  { id:"snacks", label:"🍗 Snacks" },
+  { id:"timing", label:"⚡ Workout Timing" },
+  { id:"grocery", label:"🛒 Grocery List" },
+];
+
+function renderMeals(){
+  const pills = document.getElementById('mealPills');
+  pills.innerHTML = MEAL_PILLS.map(p => `<button class="cat-pill" data-jump="${p.id}">${p.label}</button>`).join('');
+  pills.querySelectorAll('.cat-pill').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const target = document.getElementById('sec-'+btn.dataset.jump);
+      if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  const container = document.getElementById('mealsContainer');
+  const sectionsHTML = mealSections.map(s => `
+    <div class="meal-section-title" id="sec-${s.key}"><span class="emoji">${s.emoji}</span> ${s.title}</div>
+    ${s.items.map(item => item.full ? fullRecipeHTML(item.full) : miniRecipeHTML(item)).join('')}
   `).join('');
+
+  const snacksHTML = `
+    <div class="meal-section-title" id="sec-snacks"><span class="emoji">🍗</span> High-Protein Snacks</div>
+    <div class="simple-list">
+      ${proteinSnacks.map(s=>`<div class="simple-list-item"><span class="dot"></span>${s}</div>`).join('')}
+    </div>`;
+
+  const timingHTML = `
+    <div class="meal-section-title" id="sec-timing"><span class="emoji">⚡</span> Workout Timing</div>
+    ${timingCardHTML(workoutTiming.before)}
+    ${timingCardHTML(workoutTiming.after)}
+  `;
+
+  const groceryHTML = `
+    <div class="meal-section-title" id="sec-grocery"><span class="emoji">🛒</span> Grocery List</div>
+    <div class="grocery-card">
+      ${groceryList.map(g => `
+        <div class="grocery-group">
+          <h5>${g.group}</h5>
+          <ul>${g.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+        </div>
+      `).join('')}
+    </div>`;
+
+  container.innerHTML = sectionsHTML + snacksHTML + timingHTML + groceryHTML;
 }
 
 function renderProgress(){
@@ -827,10 +1206,6 @@ function renderProgress(){
 }
 
 /* ---------------- Progress Photos ---------------- */
-function todayISO(){
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
 function formatDate(dateStr){
   if(!dateStr) return '';
   const [y,m,d] = dateStr.split('-').map(Number);
@@ -1014,6 +1389,7 @@ renderTodayWorkout();
 renderMeals();
 renderProgress();
 renderPhotos();
+updateStreakUI();
 </script>
 </body>
 </html>
